@@ -3,6 +3,7 @@ package main.rice;
 import main.rice.basegen.BaseSetGenerator;
 import main.rice.concisegen.ConciseSetGenerator;
 import main.rice.parse.ConfigFile;
+import main.rice.parse.ConfigFileParser;
 import main.rice.parse.InvalidConfigException;
 import main.rice.test.TestCase;
 import main.rice.test.TestResults;
@@ -23,7 +24,7 @@ public class Main{
         }
     }
     public static Set<TestCase> generateTests(String[] args) throws IOException, InvalidConfigException, InterruptedException{
-        ConfigFile configFile = ConfigFileParser(args[0]);
+        ConfigFile configFile = ConfigFileParser.parse(ConfigFileParser.readFile(args[0]));
         BaseSetGenerator baseSetGenerator = new BaseSetGenerator(configFile.getNodes(), configFile.getNumRand());
         Tester tester = new Tester(configFile.getFuncName(), args[1], args[2],baseSetGenerator.genBaseSet());
         tester.computeExpectedResults();
